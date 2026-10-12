@@ -1,0 +1,22 @@
+# Never publish user data, auth, downloaded libraries, or debug captures.
+__pycache__/
+*.py[cod]
+*.log
+*.lock
+.env
+.env.*
+!example.env
+.venv/
+venv/
+deps/
+verification/
+*.deb
+*.so*
+auth.json
+credentials*
+*panel_state.json
+*panel_layout.json
+account_preferences.json
+.install-manifest.json
+build/
+dist/

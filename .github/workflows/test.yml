@@ -1,0 +1,27 @@
+name: Offline tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install desktop test dependencies
+        run: |
+          sudo apt-get update -o Acquire::Retries=3
+          sudo apt-get install -y python3-gi gir1.2-gtk-3.0 gir1.2-ayatanaappindicator3-0.1 librsvg2-common xvfb openbox dbus-x11 x11-utils nodejs
+      - name: Publication audit and syntax
+        run: |
+          python3 tools/check_publish.py
+          python3 -m compileall -q .
+          sh -n launch.sh tools/headless_test.sh
+      - name: Offline GTK and JavaScript tests
+        run: dbus-run-session -- xvfb-run -a -s '-screen 0 2560x1440x24' sh tools/headless_test.sh

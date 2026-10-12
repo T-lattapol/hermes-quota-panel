@@ -1,0 +1,22 @@
+{
+  "fixture": true,
+  "fetched_at": "2026-01-01T12:00:00+00:00",
+  "plan": "Demo",
+  "windows": [
+    {
+      "label": "Session",
+      "used_percent": 35,
+      "resets_at": "2026-01-01T16:00:00+00:00"
+    },
+    {
+      "label": "Weekly",
+      "used_percent": 60,
+      "resets_at": "2026-01-05T12:00:00+00:00"
+    }
+  ],
+  "provider": "anthropic",
+  "account_label": "Demo Claude account",
+  "details": [],
+  "reset_credit_details": [],
+  "reset_allowed": false
+}
