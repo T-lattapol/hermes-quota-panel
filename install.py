@@ -9,7 +9,7 @@ APP_ID = 'hermes-quota-panel'
 EXTENSION_ID = 'quota-direct-click@hermes-quota-panel'
 PROGRAM_FILES = ('codex_panel.py', 'usage_details.py', 'quota_ui.py', 'panel_geometry.py',
                  'account_selector.py', 'claude_usage.py', 'codex_usage.py', 'codex_reset.py',
-                 'runtime_paths.py', 'configuration.py', 'setup_support.py', 'launcher.py', 'launch.sh', 'doctor.py')
+                 'runtime_paths.py', 'desktop_presence.py', 'configuration.py', 'setup_support.py', 'launcher.py', 'launch.sh', 'doctor.py')
 EXTENSION_FILES = ('metadata.json', 'extension.js', 'click-routing.js', 'package.json')
 MANAGED = '# Managed by hermes-quota-panel'
 

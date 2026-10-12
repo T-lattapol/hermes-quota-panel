@@ -15,6 +15,7 @@ from gi.repository import Gtk, GLib, Gio, AyatanaAppIndicator3 as Indicator
 from quota_ui import reset_credits, is_menu_open_event
 from usage_details import UsageDetails
 import panel_geometry
+from desktop_presence import desktop_running
 from runtime_paths import APP_DIR, STATE_DIR, HERMES_PYTHON, HELPER_ENV
 
 HOME = STATE_DIR
@@ -29,6 +30,8 @@ except BlockingIOError:
 
 class CodexPanel:
     def __init__(self):
+        self.visibility_mode = os.environ.get('QUOTA_PANEL_VISIBILITY', 'desktop')
+        self.visible_for_desktop = None
         self.busy = False
         self.resetting = False
         self.latest_data = None
@@ -40,7 +43,7 @@ class CodexPanel:
             'claude-quota' if PROVIDER == 'anthropic' else 'codex-quota', str(APP_DIR / 'icons' / ('claude.svg' if PROVIDER == 'anthropic' else 'openai.svg')),
             Indicator.IndicatorCategory.APPLICATION_STATUS)
         self.indicator.set_title(NAME + ' quota')
-        self.indicator.set_status(Indicator.IndicatorStatus.ACTIVE)
+        self.indicator.set_status(Indicator.IndicatorStatus.PASSIVE)
         self.indicator.set_label(NAME + ' …', NAME + ' 100% | W 100%')
         self.menu = Gtk.Menu()
         dashboard = self.item('Usage details…', True)
@@ -54,7 +57,8 @@ class CodexPanel:
         self.bus_filter = self.bus.add_filter(self.on_bus_message, None)
         self.detail_signal = self.bus.signal_subscribe(None, 'com.hermes.QuotaDetails', 'Shown', '/com/hermes/QuotaDetails', None, Gio.DBusSignalFlags.NONE, self.on_details_shown, None)
         self.hidden_signal = self.bus.signal_subscribe(None, 'com.hermes.QuotaDetails', 'Hidden', '/com/hermes/QuotaDetails', None, Gio.DBusSignalFlags.NONE, self.on_details_hidden, None)
-        self.refresh()
+        self.check_desktop_presence()
+        GLib.timeout_add_seconds(3, self.check_desktop_presence)
         GLib.timeout_add_seconds(60, self.refresh)
 
     def item(self, label, enabled=False):
@@ -108,7 +112,25 @@ class CodexPanel:
                                           lambda document: document.__setitem__(PROVIDER, account_id))
         self.refresh()
 
+    def check_desktop_presence(self):
+        active = self.visibility_mode == 'always' or desktop_running()
+        if active == self.visible_for_desktop:
+            return True
+        self.visible_for_desktop = active
+        self.indicator.set_status(Indicator.IndicatorStatus.ACTIVE if active else Indicator.IndicatorStatus.PASSIVE)
+        if active:
+            self.refresh()  # Refresh on reopen; never automatically open details.
+        else:
+            self.request_generation += 1  # Discard an already-running quota reply.
+            self.busy = False
+            self.latest_data = None
+            if self.details:
+                self.details.hide()
+        return True
+
     def refresh(self):
+        if getattr(self, 'visible_for_desktop', True) is False:
+            return True
         if not self.busy and not self.resetting:
             self.busy = True
             self.request_generation += 1
@@ -146,6 +168,8 @@ class CodexPanel:
         return False
 
     def show_details(self):
+        if getattr(self, 'visible_for_desktop', True) is False:
+            return False
         self.bus.emit_signal(None, '/com/hermes/QuotaDetails', 'com.hermes.QuotaDetails', 'Shown', GLib.Variant('(s)', (PROVIDER,)))
         if self.details is None:
             self.details = UsageDetails(NAME, PROVIDER, self.refresh, self.reset_usage,

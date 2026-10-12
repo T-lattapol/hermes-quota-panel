@@ -17,6 +17,13 @@ Actual GTK UI rendered with synthetic demo fixtures — not live account data.
 ## Features
 
 - Top-bar session and weekly used-percentage labels.
+- By default, indicators appear only while the packaged Hermes Desktop is running.
+  Closing Desktop hides details and pauses quota polling; reopening resumes polling
+  without automatically opening a details window. Detection runs every 3 seconds.
+  CLI/gateway users can use `QUOTA_PANEL_VISIBILITY=always ./launch.sh` (and
+  `QUOTA_PANEL_VISIBILITY=always ./launch.sh --claude`) for the previous always-on behavior.
+  `QUOTA_PANEL_VISIBILITY` can also be saved as `"always"` in the viewer's non-secret
+  config file for autostart. Development Electron builds are not detected.
 - Colored quota bars, account selector, reset times, and refresh feedback.
 - Shared position/size across provider panels; one visible provider at a time.
 - Resizable full/compact modes, remembered separately.
