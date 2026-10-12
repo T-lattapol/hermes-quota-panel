@@ -2,6 +2,18 @@
 
 A Linux desktop quota viewer for **OpenAI Codex** and **Claude**, using accounts already configured in Hermes Agent. This is an unofficial, experimental desktop companion — not an OpenAI, Anthropic, or Nous Research product.
 
+## Screenshots
+
+Actual GTK UI rendered with synthetic demo fixtures — not live account data.
+
+| Codex — Full | Claude — Full |
+| --- | --- |
+| ![Codex full panel](docs/images/codex-full.png) | ![Claude full panel](docs/images/claude-full.png) |
+
+| Codex — Compact | Claude — Compact |
+| --- | --- |
+| ![Codex compact panel](docs/images/codex-compact.png) | ![Claude compact panel](docs/images/claude-compact.png) |
+
 ## Features
 
 - Top-bar session and weekly used-percentage labels.

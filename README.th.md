@@ -2,6 +2,18 @@
 
 ตัวแสดงโควตา Codex / Claude บน Linux ใช้บัญชีที่ล็อกอินไว้ใน Hermes แล้ว
 
+## ภาพหน้าจอ
+
+ภาพจาก GTK panel จริงโดยใช้ข้อมูลตัวอย่าง ไม่ใช่ข้อมูลหรือโควตาบัญชีจริง
+
+| Codex — Full | Claude — Full |
+| --- | --- |
+| ![Codex full panel](docs/images/codex-full.png) | ![Claude full panel](docs/images/claude-full.png) |
+
+| Codex — Compact | Claude — Compact |
+| --- | --- |
+| ![Codex compact panel](docs/images/codex-compact.png) | ![Claude compact panel](docs/images/claude-compact.png) |
+
 ## ก่อนใช้งาน
 
 ทดสอบบน **Ubuntu 24.04 + GNOME 46 + X11** เท่านั้น ยังไม่ยืนยันการจำตำแหน่งบน Wayland ไม่มีการรองรับ Windows
