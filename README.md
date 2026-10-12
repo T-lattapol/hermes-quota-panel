@@ -24,6 +24,33 @@ A Linux desktop quota viewer for **OpenAI Codex** and **Claude**, using accounts
 
 ## Quick start
 
+### Convenient one-command setup (recommended)
+
+After cloning this private repository yourself (no curl-pipe-bash bootstrap):
+
+```sh
+./setup.sh --dry-run      # preview: checks env, prints the plan, writes/installs/starts nothing
+./setup.sh                # checks GUI deps (asks before any sudo apt-get), detects Hermes,
+                           # saves settings, installs + autostarts for your user, starts both viewers
+```
+
+- Only verified on **Ubuntu 24.04, GNOME Shell 46, X11**; no Windows/other-desktop promises.
+- Missing GUI packages (`python3-gi`, GTK/AppIndicator/Rsvg typelibs) trigger an **interactive**
+  confirmation before any `sudo apt-get install`. In a non-interactive shell, or with
+  `--no-packages`, it never touches sudo — it just prints the exact command to run yourself.
+- If Hermes can't be discovered or looks incompatible, setup stops with a clear message and a
+  path override hint; it never installs, updates, or logs into Hermes, and never asks for secrets.
+- If a quota viewer is already running, or a legacy `codex-quota.desktop` /
+  `claude-quota.desktop` autostart entry exists, setup **does not** start anything or add a
+  duplicate autostart entry — it stages the install and prints a manual-migration note instead.
+- The optional GNOME 46 direct-click extension is copied best-effort; the Shell may need your
+  next login to pick it up, so no "works everywhere instantly" claim is made.
+
+Useful flags: `--dry-run`, `--no-packages`, `--no-start`, `--no-extension`. See
+`python3 setup.py --help` for details.
+
+### Manual steps (equivalent, more control)
+
 Install desktop prerequisites (Ubuntu):
 
 ```sh

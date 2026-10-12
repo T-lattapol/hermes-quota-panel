@@ -5,8 +5,8 @@ from pathlib import Path
 from runtime_paths import APP_DIR
 
 
-def gui_environment():
-    env = dict(os.environ)
+def gui_environment(env=None):
+    env = dict(os.environ if env is None else env)
     root = env.get('QUOTA_PANEL_GI_ROOT')
     if root:
         # Optional externally installed libraries, never bundled in the repository.

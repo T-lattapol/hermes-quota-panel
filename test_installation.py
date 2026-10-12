@@ -17,6 +17,7 @@ class InstallationTests(unittest.TestCase):
             target = base / 'installed app'
             install(ROOT, target, base / 'config', base / 'data', autostart=True, extension=True)
             self.assertTrue((target / 'codex_panel.py').is_file())
+            self.assertTrue((target / 'configuration.py').is_file(), 'Installed runtime must include its saved-settings loader')
             self.assertTrue(os.access(target / 'launch.sh', os.X_OK))
             self.assertFalse((target / 'panel_state.json').exists())
             self.assertFalse((target / 'tests').exists())
