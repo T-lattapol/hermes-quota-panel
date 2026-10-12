@@ -31,7 +31,7 @@ class CompactModeTests(unittest.TestCase):
     def test_compact_mode_hides_verbose_widgets_but_keeps_identity_selector_bars_and_toggle(self):
         detail = self._detail()
         try:
-            detail.update(json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
+            detail.update(json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
             detail.set_compact(True)
             self.assertTrue(detail.compact)
             # Retained: provider identity, account selector, both progress bars, mode toggle.
@@ -55,7 +55,7 @@ class CompactModeTests(unittest.TestCase):
     def test_switching_back_to_full_restores_everything_even_after_show_all(self):
         detail = self._detail()
         try:
-            detail.update(json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
+            detail.update(json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
             detail.set_compact(True)
             detail.set_compact(False)
             detail.window.show_all()
@@ -70,7 +70,7 @@ class CompactModeTests(unittest.TestCase):
     def test_compact_survives_show_hide_show_cycle(self):
         detail = self._detail()
         try:
-            detail.update(json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
+            detail.update(json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
             detail.set_compact(True)
             detail.show()
             pump(.1)
@@ -86,7 +86,7 @@ class CompactModeTests(unittest.TestCase):
     def test_claude_without_reset_support_keeps_reset_hidden_in_full_mode_after_toggle(self):
         detail = UsageDetails('Claude', 'anthropic', lambda: None, lambda _: None, layout_path=None)
         try:
-            detail.update(json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'claude_snapshot.json').read_text()))
+            detail.update(json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'claude_snapshot.json').read_text()))
             self.assertFalse(detail.reset_button.get_visible())
             detail.set_compact(True)
             detail.set_compact(False)
@@ -99,7 +99,7 @@ class CompactUpdateTests(unittest.TestCase):
     def test_refresh_while_compact_does_not_restore_hidden_reset_and_dates(self):
         d = UsageDetails('Codex', 'openai-codex', lambda: None, lambda _: None)
         try:
-            data = json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
+            data = json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
             d.update(data)
             d.show()
             d.set_compact(True)

@@ -8,4 +8,20 @@
 6. Run the offline tests, JavaScript checks, syntax checks, and publication audit.
 7. Review every file staged for publication. Never upload a screen capture containing real account information.
 
+## Repository layout
+
+- Root Python modules: application and installation entry points.
+- `tests/`: offline tests, opt-in live integration tests, and synthetic fixtures.
+- `tools/`: CI runner, publication audit, and reproducible demo screenshots.
+- `docs/images/`: screenshots containing sample data only.
+- `gnome-extension/` and `icons/`: optional desktop integration and artwork.
+
+Run offline tests from the repository root:
+
+```sh
+xvfb-run -a /usr/bin/python3 -m unittest discover -s tests -p 'test_*.py' -v
+node --test tests/test_direct_click.mjs
+python3 tools/check_publish.py
+```
+
 This viewer relies on internal Hermes account-usage interfaces; compatibility changes should be checked by `doctor.py` and backed by tests.

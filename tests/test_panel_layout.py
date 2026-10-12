@@ -95,7 +95,7 @@ class PanelLayoutTests(unittest.TestCase):
         from gi.repository import Gtk
         detail = UsageDetails('Codex', 'openai-codex', lambda: None, lambda _: None)
         try:
-            detail.update(json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
+            detail.update(json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
             detail.show()
             pump(.2)
             detail.window.resize(440, 280)

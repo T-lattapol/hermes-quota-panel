@@ -6,7 +6,7 @@ from unittest.mock import Mock
 
 
 def panel_class():
-    tree = ast.parse(Path(__file__).with_name('codex_panel.py').read_text())
+    tree = ast.parse((Path(__file__).resolve().parents[1] / 'codex_panel.py').read_text())
     cls = next(n for n in tree.body if isinstance(n, ast.ClassDef) and n.name == 'CodexPanel')
     cls.body = [n for n in cls.body if not isinstance(n, ast.FunctionDef) or n.name != '__init__']
     from runtime_paths import APP_DIR, HERMES_PYTHON, HELPER_ENV

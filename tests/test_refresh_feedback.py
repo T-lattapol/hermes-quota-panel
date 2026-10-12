@@ -10,7 +10,7 @@ class RefreshFeedbackTests(unittest.TestCase):
     def test_click_acknowledges_pending_then_marks_real_completion(self):
         calls = []
         detail = UsageDetails('Codex', 'openai-codex', lambda: calls.append('fetch'), lambda _: None)
-        data = json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
+        data = json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
         button = next(w for w in descendants(detail.window) if isinstance(w, Gtk.Button) and w.get_label() == 'Refresh')
         try:
             detail.update(data)
@@ -41,7 +41,7 @@ class RefreshFeedbackTests(unittest.TestCase):
     def test_reopening_cached_data_does_not_claim_pending_refresh_finished(self):
         detail = UsageDetails('Codex', 'openai-codex', lambda: None, lambda _: None)
         try:
-            detail.update(json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
+            detail.update(json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text()))
             detail.refresh_button.emit('clicked')
             detail.hide()
             detail.show()

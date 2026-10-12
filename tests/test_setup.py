@@ -274,7 +274,7 @@ class SetupShWiringTests(unittest.TestCase):
     """Run the real shell/Python wiring with a hermetic external-interpreter fixture."""
 
     def test_setup_sh_dry_run_prints_plan_and_exits_zero(self):
-        repo = Path(__file__).resolve().parent
+        repo = Path(__file__).resolve().parents[1]
         with TemporaryDirectory() as folder:
             root = Path(folder)
             native = root / 'native-python'
@@ -293,7 +293,7 @@ class SetupShWiringTests(unittest.TestCase):
             self.assertFalse((root / 'data').exists())
 
     def test_setup_sh_reports_clear_error_when_hermes_unavailable(self):
-        repo = Path(__file__).resolve().parent
+        repo = Path(__file__).resolve().parents[1]
         with TemporaryDirectory() as folder:
             root = Path(folder)
             env = {**os.environ, 'HERMES_PYTHON': str(root / 'missing-python'),

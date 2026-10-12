@@ -9,7 +9,7 @@ class SelectedAccountResetTests(unittest.TestCase):
         calls = []
         detail = UsageDetails('Codex', 'openai-codex', lambda: None, calls.append)
         try:
-            data = json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
+            data = json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
             data['reset_allowed'] = False
             detail.update(data)
             self.assertFalse(detail.reset_button.get_sensitive())

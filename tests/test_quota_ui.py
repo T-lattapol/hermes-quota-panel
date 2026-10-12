@@ -48,7 +48,7 @@ class UsageUITests(unittest.TestCase):
     def test_tray_menu_has_no_duplicate_monochrome_usage_rows(self):
         import ast
         from pathlib import Path
-        source = ast.parse((Path(__file__).resolve().parent / 'codex_panel.py').read_text())
+        source = ast.parse((Path(__file__).resolve().parents[1] / 'codex_panel.py').read_text())
         cls = next(node for node in source.body if isinstance(node, ast.ClassDef) and node.name == 'CodexPanel')
         init = next(node for node in cls.body if isinstance(node, ast.FunctionDef) and node.name == '__init__')
         captions = [node.args[0].value for node in ast.walk(init)

@@ -29,7 +29,7 @@ class ResetHelperGuardTests(unittest.TestCase):
              patch.object(sys, 'argv', ['codex_reset.py', '--confirm', '--account-id', 'first-pool-entry']), \
              contextlib.redirect_stdout(io.StringIO()):
             try:
-                runpy.run_path(str(Path(__file__).resolve().parent / 'codex_reset.py'), run_name='__main__')
+                runpy.run_path(str(Path(__file__).resolve().parents[1] / 'codex_reset.py'), run_name='__main__')
             except SystemExit as error:
                 self.assertEqual(error.code, 0)
         usage.redeem_codex_reset_credit.assert_not_called()

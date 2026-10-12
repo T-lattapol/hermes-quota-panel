@@ -38,9 +38,11 @@ Actual GTK UI rendered with synthetic demo fixtures — not live account data.
 
 ### Convenient one-command setup (recommended)
 
-After cloning this private repository yourself (no curl-pipe-bash bootstrap):
+Clone the repository and run setup (no curl-pipe-bash bootstrap):
 
 ```sh
+git clone https://github.com/T-lattapol/hermes-quota-panel.git
+cd hermes-quota-panel
 ./setup.sh --dry-run      # preview: checks env, prints the plan, writes/installs/starts nothing
 ./setup.sh                # checks GUI deps (asks before any sudo apt-get), detects Hermes,
                            # saves settings, installs + autostarts for your user, starts both viewers
@@ -154,7 +156,7 @@ python3 tools/check_publish.py
 Live helper tests are opt-in and make real quota API requests. They never consume reset credits:
 
 ```sh
-RUN_LIVE_TESTS=1 python3 -m unittest test_account_helpers_live -v
+RUN_LIVE_TESTS=1 python3 -m unittest discover -s tests -p 'test_account_helpers_live.py' -v
 ```
 
 See `SECURITY.md` before sharing. UI geometry tests should use a real GTK main loop so frame-clock driven resizing can complete. A missed frame under a loaded window manager can make a geometry assertion flaky; do not remove the assertions to hide failures.

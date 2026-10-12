@@ -46,7 +46,7 @@ class UsageDetailsTests(unittest.TestCase):
                     detail.window.destroy()
 
     def test_live_snapshot_renders_colored_bars_and_cancel_does_not_reset(self):
-        data = json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
+        data = json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'codex_snapshot.json').read_text())
         calls = []
         detail = UsageDetails('Codex', 'openai-codex', lambda: None, calls.append)
         detail.update(data)
@@ -66,7 +66,7 @@ class UsageDetailsTests(unittest.TestCase):
         detail.window.destroy()
 
     def test_claude_has_colored_bars_but_no_manual_reset_button(self):
-        data = json.loads((Path(__file__).resolve().parent / 'tests' / 'fixtures' / 'claude_snapshot.json').read_text())
+        data = json.loads((Path(__file__).resolve().parents[1] / 'tests' / 'fixtures' / 'claude_snapshot.json').read_text())
         detail = UsageDetails('Claude', 'anthropic', lambda: None, lambda _: self.fail('Claude reset must not run'))
         detail.update(data)
         self.assertFalse(detail.reset_button.get_visible())
