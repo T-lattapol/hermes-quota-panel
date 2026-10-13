@@ -3,6 +3,9 @@ import argparse
 import json
 import sys
 from agent.credential_pool import read_credential_pool
+import agent.account_usage as account_usage
+import anthropic_percent
+anthropic_percent.install(account_usage)  # Anthropic utilization is already percent.
 from agent.account_usage import _fetch_anthropic_account_usage
 from hermes_cli.subcommands.usage import usage_snapshot_document
 from account_selector import list_accounts
